@@ -345,3 +345,57 @@ bash 命令
 
 查看所有80端口使用情况
   netstat -ntulp | grep 80
+
+显示当前路径
+  pwd
+
+删除文件
+  rm [文件名]
+  提示是否删除时输入 Y 并回车即可
+
+修改文件名
+  mv [旧文件名] [新文件名]
+
+vim 文本编辑回退
+  Esc 键 > u
+
+查看环境变量
+  env
+
+查看所有服务
+  ps -aux
+
+查找某个文件夹
+  find [那个文件夹下] -name [文件夹名称]
+  eg:
+    find / -name nacos 
+
+查看系统容量
+  df -lh
+ 
+新建一个文件夹
+  mkdir [文件夹名称]
+
+删除文件夹
+  rm -rf [文件夹名称]/
+
+修改文件夹名
+  mv [文件夹当前名称] [文件夹新名称]
+
+解压至指定目录下
+  tar -zxvf [待解压文件] -C [指定目录]
+
+Q:找不到部署在 linux 上的 vue 项目
+A:nginx -t
+  找到 conf 配置文件并打开
+    http > server > root 对应的路径,进入该路径就找到了你的 vue 项目
+    
+
+Q:忘记 mysql/nginx 安装在哪儿了
+A:whereis mysql
+
+查看 mysql 服务是否开启
+  service mysqld status
+
+查看服务是否开启
+  ps aux|grep [服务名称]
