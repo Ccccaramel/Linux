@@ -361,6 +361,11 @@ vim 文本编辑回退
 
 查看环境变量
   env
+  export
+
+编辑/新增环境变量,并生效
+  vim /etc/profile
+  source /etc/profile
 
 查看所有服务
   ps -aux
@@ -407,15 +412,359 @@ A:whereis mysql
   cp 
 
 常用的日志
-  /var/log/messages: 包括整体系统普通信息，其中也包含系统启动期间的日志。此外，还包括mail,cron,daemon,kern,auth等内容.
-  /var/log/syslog:它上messages日志不同，它只记录警告信息，通常是系统出问题的信息。
+  /var/log/messages: 包括整体系统普通信息,其中也包含系统启动期间的日志。此外,还包括mail,cron,daemon,kern,auth等内容.
+  /var/log/syslog:它上messages日志不同,它只记录警告信息,通常是系统出问题的信息。
   /var/log/user.log: 记录所有等级用户信息的日志.
-  /var/log/auth.log: 包含系统授权信息，用户登陆和使用权限机制
+  /var/log/auth.log: 包含系统授权信息,用户登陆和使用权限机制
   /var/log/daemon.log: 包含各种系统后台守护进程日志信息
-  /var/log/kern.log: 包含内核产生的日志，有助于在定制内核时解决问题.
-  /var/log/boot.log: 记录系统在引导过程中发生的事件，即linux系统开机自检过程显示的信息
-  /var/log/lastlog: 记录最后一次用户成功登陆的时间，IP等信息，lastlog查看
-  /var/log/secure: linux系统安全日志，记录用户和工作组变坏情况，用户登陆认证情况
-  /var/log/btmp:记录linux登陆失败的用户，时间和远程IP
-  /var/log/wtmp:此日志文件永久记录每个用户登录，注销及系统的启动，停机的事件，用last查看
+  /var/log/kern.log: 包含内核产生的日志,有助于在定制内核时解决问题.
+  /var/log/boot.log: 记录系统在引导过程中发生的事件,即linux系统开机自检过程显示的信息
+  /var/log/lastlog: 记录最后一次用户成功登陆的时间,IP等信息,lastlog查看
+  /var/log/secure: linux系统安全日志,记录用户和工作组变坏情况,用户登陆认证情况
+  /var/log/btmp:记录linux登陆失败的用户,时间和远程IP
+  /var/log/wtmp:此日志文件永久记录每个用户登录,注销及系统的启动,停机的事件,用last查看
   /var/log/utmp:记录有关当前登录的每个用户的信息。如who,w,users,finger等需要访问此文件
+
+查看系统版本
+  lsb_release -a
+
+目录结构
+  bin:二进制可执行文件 
+  /bin/:存放系统命令的目录,普通用户和超级用户都可执行,单用户下可执行
+  /sbin/:保存和系统环境设置相关的命令,只有超级用户可执行,但有些允许普通用户查看
+  /boot/:系统启动目录,保存系统启动相关的文件,如内核文件和启动引导程序(grub)文件等
+  /dev/:设备文件保存目录
+  /etc/:配置文件保存位置
+  /home/:普通用户的家目录,如用户 user1 的家目录就是 /home/user1
+  /lib/:系统调用的函数库保存位置
+  /lost+found/:这个目录只在每个分区中出现, /lost+found 就是根分区的备份恢复目录, /boot/lost+found 就是 /boot 分区的备份恢复目录, fsck 工具会检查这里,并进行修复
+  /media/:挂载目录,系统建议是用来挂载媒体设备的,例如软盘和光盘
+  /mnt/:挂载目录,U盘,移动硬盘,其他操作系统的分区
+  /misc/:挂载目录,用来挂载 NFS 服务的共享目录
+  /opt/:第三方安装的软件保存位置,不过习惯放置到 /usr/local/ 目录当中安装软件
+  /proc/:虚拟文件系统,该目录中的数据并不保存到硬盘当中,而是保存到内存当中。主要保存系统的内核
+  /sys/:虚拟文件系统,保存与内核相关的信息
+  /root/:超级用户的家目录,直接在 / 下,普通用户家目录在 /home 下
+  /srv/:服务数据目录,当系统服务启动之后可以在这个目录中保存所需要的数据
+  /tmp/临时目录,存放临时文件的目录,所有用户都可以访问写入
+  /usr/:系统软件资源目录,是 Unix Software Resource 的缩写,存放系统软件资源的目录
+  /usr/bin/:存放系统命令的目录,所有人都可以执行,这些命令和系统启动无关,单用户模式下不可知性
+  /usr/sbin/:存放根文件系统不必要的系统管理命令,例如多数服务程序,只有超级用户可以使用
+  /var/:动态数据保存位置,主要保存缓存,日志以及软件运行所产生的文件
+  建议将个人所有数据放在 usr/local 下
+
+sudo
+  以系统管理者的身份执行命令
+
+chmod
+  设置文件或目录的权限
+    chmod x [文件名]
+
+查看主机名,系统信息,架构等信息
+  hostnamectl
+
+Q:/lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
+A:64位系统安装了32位软件
+
+Q:今天再查看端口时发现有些 name 的值的端口部分是一个字符串而并非具体的端口号数值
+A:常用计算机协议端口
+  1025=network blackjack
+  1030=BBN IAD
+  1031=BBN IAD
+  1032=BBN IAD
+  1067=Installation Bootstrap Proto. Serv.
+  1068=Installation Bootstrap Proto. Cli.
+  1080=SOCKS
+  1083=Anasoft License Manager
+  1084=Anasoft License Manager
+  1155=Network File Access
+  1222=SNI R&D network
+  1248=hermes
+  1346=Alta Analytics License Manager
+  1347=multi media conferencing
+  1347=multi media conferencing
+  1348=multi media conferencing
+  1349=Registration Network Protocol
+  1350=Registration Network Protocol
+  1351=Digital Tool Works (MIT)
+  1352=/Lotus Notelotusnote
+  1353=Relief Consulting
+  1354=RightBrain Software
+  1355=Intuitive Edge
+  1356=CuillaMartin Company
+  1357=Electronic PegBoard
+  1358=CONNLCLIconnlcli
+  1359=FTSRVftsrv
+  1360=MIMERmimer
+  1361=LinX
+  1362=TimeFliestimeflies
+  1363=Network DataMover Requester
+  1364=Network DataMover Server
+  1365=Network Software Associates
+  1366=Novell NetWare Comm Service Platform
+  1367=DCSdcs
+  1368=ScreenCastscreencast
+  1369=GlobalView to Unix Shell
+  1370=Unix Shell to GlobalView
+  1371=Fujitsu Config Protocol
+  1372=Fujitsu Config Protocol
+  1373=Chromagrafxchromagrafx
+  1374=EPI Software Systems
+  1375=Bytexbytex
+  1376=IBM Person to Person Software
+  1377=Cichlid License Manager
+  1378=Elan License Manager
+  1379=Integrity Solutions
+  1380=Telesis Network License Manager
+  1381=Apple Network License Manager
+  1382=udt_os
+  1383=GW Hannaway Network License Manager
+  1384=Objective Solutions License Manager
+  1385=Atex Publishing License Manager
+  1386=CheckSum License Manager
+  1387=Computer Aided Design Software Inc LM
+  1388=Objective Solutions DataBase Cache
+  1389=Document Manager
+  1390=Storage Controller
+  1391=Storage Access Server
+  1392=Print Managericlpv-pm
+  1393=Network Log Server
+  1394=Network Log Client
+  1395=PC Workstation Manager software
+  1396=DVL Active Mail
+  1397=Audio Active Mail
+  1398=Video Active Mail
+  1399=Cadkey License Manager
+  1400=Cadkey Tablet Daemon
+  1401=Goldleaf License Manager
+  1402=Prospero Resource Manager
+  1403=Prospero Resource Manager
+  1404=Infinite Graphics License Manager
+  1405=IBM Remote Execution Starter
+  1406=NetLabs License Manager
+  1407=DBSA License Manager
+  1408=Sophia License Manager
+  1409=Here License Manager
+  1410=HiQ License Manager
+  1411=AudioFileaf
+  1412=InnoSysinnosys
+  1413=Innosys-ACLinnosys-acl
+  1414=IBM MQSeriesibm-mqseries
+  1415=DBStardbstar
+  1416=Novell LU6.2novell-lu6.2
+  1417=Timbuktu Service 1 Port
+  1418=Timbuktu Service 2 Port
+  1419=Timbuktu Service 3 Port
+  1420=Timbuktu Service 4 Port
+  1421=Gandalf License Manager
+  1422=Autodesk License Manager
+  1423=Essbase Arbor Software
+  1424=Hybrid Encryption Protocol
+  1425=Zion Software License Manager
+  1426=Satellite-data Acquisition System 1
+  1427=mloadd monitoring tool
+  1428=Informatik License Manager
+  1429=Hypercom NMSnms
+  1430=Hypercom TPDUtpdu
+  1431=Reverse Gosip Transport
+  1432=Blueberry Software License Manager
+  1433=Microsoft-SQL-Server
+  1434=Microsoft-SQL-Monitor
+  1435=IBM CISCibm-cics
+  1436=Satellite-data Acquisition System 2
+  1437=Tabulatabula
+  1438=Eicon Security Agent/Server
+  1439=Eicon X25/SNA Gateway
+  1440=Eicon Service Location Protocol
+  1441=Cadis License Management
+  1442=Cadis License Management
+  1443=Integrated Engineering Software
+  1444=Marcam License Management
+  1445=Proxima License Manager
+  1446=Optical Research Associates License Manager
+  1447=Applied Parallel Research LM
+  1448=OpenConnect License Manager
+  1449=PEportpeport
+  1450=Tandem Distributed Workbench Facility
+  1451=IBM Information Management
+  1452=GTE Government Systems License Man
+  1453=Genie License Manager
+  1454=interHDL License Manager
+  1454=interHDL License Manager
+  1455=ESL License Manager
+  1456=DCAdca
+  1457=Valisys License Manager
+  1458=Nichols Research Corp.
+  1459=Proshare Notebook Application
+  1460=Proshare Notebook Application
+  1461=IBM Wireless LAN
+  1462=World License Manager
+  1463=Nucleusnucleus
+  1464=MSL License Manager
+  1465=Pipes Platform
+  1466=Ocean Software License Manager
+  1467=CSDMBASEcsdmbase
+  1468=CSDMcsdm
+  1469=Active Analysis Limited License Manager
+  1470=Universal Analytics
+  1471=csdmbasecsdmbase
+  1472=csdmcsdm
+  1473=OpenMathopenmath
+  1474=Telefindertelefinder
+  1475=Taligent License Manager
+  1476=clvm-cfgclvm-cfg
+  1477=ms-sna-server
+  1478=ms-sna-base
+  1479=dberegisterdberegister
+  1480=PacerForumpacerforum
+  1481=AIRSairs
+  1482=Miteksys License Manager
+  1483=AFS License Manager
+  1484=Confluent License Manager
+  1485=LANSourcelansource
+  1486=nms_topo_serv
+  1487=LocalInfoSrvr
+  1488=DocStordocstor
+  1489=dmdocbrokerdmdocbroker
+  1490=insitu-confinsitu-conf
+  1491=anynetgateway
+  1492=stone-design-1
+  1493=netmap_lmnetmap_lm
+  1494=icaica
+  1495=cvccvc
+  1496=liberty-lmliberty-lm
+  1497=rfx-lmrfx-lm
+  1498=Watcom-SQLwatcom-sql
+  1499=Federico Heinz Consultora
+  1500=VLSI License Manager
+  1501=Satellite-data Acquisition System 3
+  1502=Shivashivadiscovery
+  1503=Databeamimtc-mcs
+  1504=EVB Software Engineering License Manager
+  1505=Funk Software, Inc.
+  1524=ingres
+  1525=oracle
+  1525=Prospero Directory Service non-priv
+  1526=Prospero Data Access Prot non-priv
+  1527=oracletlisrv
+  1529=oraclecoauthor
+  1600=issd
+  1651=proshare conf audio
+  1652=proshare conf video
+  1653=proshare conf data
+  1654=proshare conf request
+  1655=proshare conf notify
+  1661=netview-aix-1
+  1662=netview-aix-2
+  1663=netview-aix-3
+  1664=netview-aix-4
+  1665=netview-aix-5
+  1666=netview-aix-6
+  1986=cisco license management
+  1987=cisco RSRB Priority 1 port
+  1988=cisco RSRB Priority 2 port
+  1989=cisco RSRB Priority 3 port
+  1989=MHSnet systemmshnet
+  1990=cisco STUN Priority 1 port
+  1991=cisco STUN Priority 2 port
+  1992=cisco STUN Priority 3 port
+  1992=IPsendmsgipsendmsg
+  1993=cisco SNMP TCP port
+  1994=cisco serial tunnel port
+  1995=cisco perf port
+  1996=cisco Remote SRB port
+  1997=cisco Gateway Discovery Protocol
+  1998=cisco X.25 service (XOT)
+  1999=cisco identification port
+  2009=whosockami
+  2010=pipe_server
+  2011=raid
+  2012=raid-ac
+  2013=rad-am
+  2015=raid-cs
+  2016=bootserver
+  2017=terminaldb
+  2018=rellpack
+  2019=about
+  2019=xinupageserver
+  2020=xinupageserver
+  2021=xinuexpansion1
+  2021=down
+  2022=xinuexpansion2
+  2023=xinuexpansion3
+  2023=xinuexpansion4
+  2024=xinuexpansion4
+  2025=xribs
+  2026=scrabble
+  2027=shadowserver
+  2028=submitserver
+  2039=device2
+  2032=blackboard
+  2033=glogger
+  2034=scoremgr
+  2035=imsldoc
+  2038=objectmanager
+  2040=lam
+  2041=interbase
+  2042=isis
+  2043=isis-bcast
+  2044=primsl
+  2045=cdfunc
+  2047=dls
+  2048=dls-monitor
+  2065=Data Link Switch Read Port Number
+  2067=Data Link Switch Write Port Number
+  2201=Advanced Training System Program
+  2500=Resource Tracking system server
+  2501=Resource Tracking system client
+  2564=HP 3000 NS/VT block mode telnet
+  2784=world wide web - development
+  3049=ccmail
+  3264=ccmail, cc:mail/lotus
+  3333=dec-notes
+  3984=MAPPER network node manager
+  3985=MAPPER TCP/IP server
+  3986=MAPPER workstation server
+  3421=Bull Apprise portmapper
+  3900=Unidata UDT OS
+  4132=NUTS Daemonnuts_dem
+  4133=NUTS Bootp Server
+  4343=UNICALL
+  4444=KRB524
+  4672=remote file access server
+  5002=radio free ethernet
+  5010=TelepathStarttelelpathstart
+  5011=TelepathAttack
+  5050=multimedia conference control tool
+  5145=rmonitor_secure
+  5190=aol, America-Online
+  5300=HA cluster heartbeat
+  5301=hacl-gs # HA cluster general services
+  5302=HA cluster configuration
+  5303=hacl-probe HA cluster probing
+  5305=hacl-test
+  6000-6063=x11 X Window System
+  6111=sub-process HP SoftBench Sub-Process Control
+  6141/=meta-corp Meta Corporation License Manager
+  6142=aspentec-lm Aspen Technology License Manager
+  6143=watershed-lm Watershed License Manager
+  6144=statsci1-lm StatSci License Manager - 1
+  6145=statsci2-lm StatSci License Manager - 2
+  6146=lonewolf-lm Lone Wolf Systems License Manager
+  6147=montage-lm Montage License Manager
+  7000=afs3-fileserver file server itself
+  7001=afs3-callback callbacks to cache managers
+  7002=afs3-prserver users & groups database
+  7003=afs3-vlserver volume location database
+  7004=afs3-kaserver AFS/Kerberos authentication service
+  7005=afs3-volser volume managment server
+  7006=afs3-errors error interpretation service
+  7007=afs3-bos basic overseer process
+  7008=afs3-update server-to-server updater
+  7009=afs3-rmtsys remote cache manager service
+  7010=ups-online onlinet uninterruptable power supplies
+  7100=X Font Service
+  7200=FODMS FLIP
+  8010=Wingate
+  8181=IMail
+  9535=man
